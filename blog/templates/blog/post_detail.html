@@ -1,0 +1,91 @@
+{% extends "blog/base.html" %}{%load static%}{% load crispy_forms_tags %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ post.author }}</a>
+         
+        {% if post.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">{{ post.content }}</p>
+      <img class="" src="{{ post.image.url }}">
+
+    
+    </div>
+
+
+    <!-- Like section  -->
+
+
+    <br/><br/>
+<hr>
+<br/>
+<form action="{%url'like_post'% post.pk}" method="post">
+   {%csrf_token%}
+  <button type="submit", name="post_id",value="{{post.id}}",class="btn btn-primary btn-sm">Like</button>
+</form>
+
+    <!-- Comment -->
+<h2>Comments</h2>
+{%if not post.comments.all%}
+   No COmments yet...
+
+<form class="form-signin" method="POST" id="post-form">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <br />
+    {{ form|crispy }}
+  </fieldset>
+  <div class="form-group">
+    <br/>
+    <button
+      class="btn btn-lg btn-primary btn-block text-uppercase"
+      type="submit"
+    >
+      Comment</button
+    ><br />
+   </div>
+  </form>
+
+{%else%}
+
+<form class="form-signin" method="POST" id="post-form">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <br />
+    {{ form|crispy }}
+  </fieldset>
+  <div class="form-group">
+    <br/>
+    <button
+      class="btn btn-lg btn-primary btn-block text-uppercase"
+      type="submit"
+    >
+      Comment</button
+    ><br />
+   </div>
+  </form>
+{%for comment in post.comments.all%}
+    <strong>{{comment.name}}-</strong>
+    <br/>
+    {{comment.body}}
+    <br>
+    {%endfor %}
+{%endif %}
+
+<br></br>
+
+</article>
+{% endblock content %}
+
+
+
+
+<!-- editted -->
