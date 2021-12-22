@@ -1,26 +1,40 @@
 {% extends "blog/base.html"%}
 {%load crispy_forms_tags%}
+{%block hero %}
+<style>
+body{
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+</style>
+{% endblock hero %}
 {% block content%}
-  <div class="content-section">
+  <div class="content">
   	<form method="POST">
 <!--csrf token to ensure security in form to protect it from attacks -->
        {% csrf_token%}
-       <fieldset class="form-group">
+       <center>
+       <fieldset class=" form-group my-3">
        	 <legend class="border-bottom mb-4">Login</legend>
        	 {{ form|crispy  }}
        	</fieldset>
-        <div class="form-group">
+        
+        <div class="form-group my-3">
           <button class="btn btn-outline-info" type="submit">Login</button>
         </div>
+     
         <div class="border-top pt-3">
-            <a href="{%url 'register'%}">Need  account Signin </a>
+            <a class ="btn btn-outline-dark" href="{%url 'register'%}"> SignUp </a>
         </div>
         <div class="border-top pt-3">
-          <a href="{%url 'password_reset'%}">Reset Password </a>
+          <a  class ="btn btn-outline-dark" href="{%url 'password_reset'%}">Reset Password </a>
+         
       </div>
+  </center>      
+
       
   		
   	</form>
+    
   </div>
 
 {%endblock content%}

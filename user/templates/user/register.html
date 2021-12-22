@@ -7,21 +7,34 @@
 style="background-image: url({% static 'user/background.jpg'%}); height: 500vh"></div>
 -->
 {%load crispy_forms_tags%}
+{%block hero %}
+<style>
+body{
+  background-color: #4158D0;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}
+</style>
+{% endblock hero %}
 {% block content%}
-  <div class="content-section" >
+  <div class="content" >
   	<form method="POST">
   		<!-- csrf token to ensure security in form to protect it from attacks -->
        {% csrf_token%}
+       <center>
        <fieldset class="form-group">
        	 <legend class="border-bottom mb-4">SignUp</legend>
+        </center>
        	 {{ form|crispy  }}
        	</fieldset>
+         <center>
         <div class="form-group">
           <button class="btn btn-outline-info" type="submit">Signup</button>
         </div>
+        <hr>
         <div class="border-top pt-3">
-            <a href="{%url 'login'%}">Already have accoutn Signin </a>
-        </div>
+          <a class ="btn btn-outline-dark" href="{%url 'login'%}"> Already have Account Signin </a>
+      </div>
+         </center>
 
 
   		

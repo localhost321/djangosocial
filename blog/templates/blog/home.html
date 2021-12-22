@@ -1,68 +1,54 @@
-
 {% extends "blog/base.html" %}{%load static%}{% load crispy_forms_tags %}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{%url 'profile' %}">{{ post.author }}</a>
-              
-            </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-            {%if post.image%}
-           <img  src="{{ post.image.url }}" class='image'/> 
-            {%endif%}
-          </div>
-        </article>
-    {% endfor %}
+<div class="background">
+{% for post in posts %}
+<article class="media content-section ">
+  <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{%url 'profile'  %}">{{ post.author }}</a>
+
+    </div>
+    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+    <p class="article-content">{{ post.content }}</p>
+    {%if post.image%}
+
+    <img src="{{ post.image.url }}" class='image' /></div>
+    {%endif%}
+</article>
+</div>
+</div>
+{%if not post.comments.all%}
+No COmments yet...
+
+
+{%else%}
+
+{%for comment in post.comments.all%}
+<strong>{{comment.name}}-</strong>
+<br />
+{{comment.body}}
+<br>
+{%endfor %}
+{%endif %}
+
+<form class="form-signin" method="POST" id="post-form">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <br />
+    {{ form|crispy }}
+  </fieldset>
+  <div class="form-group">
+    <br />
+    <a class="btn btn-lg btn-primary btn-block text-uppercase" href="{% url 'post-detail' post.id %}">Add Comment</a>
+    <!-- <a href="{% url 'post-detail' post.id %}"><button float="right" class="btn btn-lg btn-primary btn-block text-uppercase" > -->
+   
+  </div>
+</form>
+
+{% endfor %}
 
 
 <!-- showing comments in main page -->
-{%if not post.comments.all%}
-    No COmments yet...
-    <form class="form-signin" method="POST" id="post-form">
-      {% csrf_token %}
-      <fieldset class="form-group">
-        <br />
-        {{ form|crispy }}
-      </fieldset>
-      <div class="form-group">
-        <br/>
-        <button
-          class="btn btn-lg btn-primary btn-block text-uppercase"
-          type="submit"
-        >
-          Comment</button
-        ><br />
-       </div>
-      </form>
- 
-{%else%}
- 
- <form class="form-signin" method="POST" id="post-form">
-   {% csrf_token %}
-   <fieldset class="form-group">
-     <br />
-     {{ form|crispy }}
-   </fieldset>
-   <div class="form-group">
-     <br/>
-     <button
-       class="btn btn-lg btn-primary btn-block text-uppercase"
-       type="submit"
-     >
-       Comment</button
-     ><br />
-    </div>
-   </form>
-  {%for comment in post.comments.all%}
-     <strong>{{comment.name}}-</strong>
-     <br/>
-     {{comment.body}}
-     <br>
-     {%endfor %}
- {%endif %}
- 
+
 {% endblock content %}

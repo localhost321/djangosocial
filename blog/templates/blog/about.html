@@ -1,21 +1,15 @@
 <!-- {% extends "blog/base.html"%}
  -->
 {%block content %}
-
-<center>
+<style>
+    #about{
+        box-shadow: rgba(119, 122, 208, 0.419) 5px 10px;
+    }
+</style>
+<div id="about" class="card">
 <h1>ABOUT AND CONTACT</h1>
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4"></legend>
-           <h2>about</h2>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Contact</button>
-            </div>
-        </form>
-    </div>
+    This is a demo social media project made with Djagno Framework .....
+</div>
 
 {% endblock content %}
 

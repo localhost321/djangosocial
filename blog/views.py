@@ -21,6 +21,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 
 from django.urls import reverse
+from decouple import config
+
+def index(request):
+    return render(request,'blog/index.html')
 
 def home(request):
     context = {
@@ -114,7 +118,15 @@ def contact(request):
             message = "\n".join(body.values())
 
             try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ['deepanshumaitrey123@gmail.com']) 
+
+                send_mail(
+                    subject,
+                    message,
+                    'email',
+                    ['config.[EMAIL_HOST_USER]'],
+                    fail_silently=False,
+                )
+                
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect ('blog-home')
